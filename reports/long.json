@@ -1,0 +1,2049 @@
+{
+  "model": "Qwen3-VL",
+  "base_url": "http://10.109.50.250:1212/v1",
+  "temperature": 0,
+  "seed": 42,
+  "n_tasks": 6,
+  "tasks_sha256": "3a3543338816dbd0ff86ddec6af49d31f82d1f8ac33a504409b02c64ac90ffec",
+  "prompt_sha256": "aae5234735339935f256a5784a05cd9d9be1d6bc221e32d32d6f2da6dca72cec",
+  "limits": {
+    "react_steps": 8,
+    "plan_model_calls": 20,
+    "workflow_model_calls": 5
+  },
+  "partial": false,
+  "systems": {
+    "workflow": {
+      "n": 6,
+      "success": 0.0,
+      "mean_prompt_tokens": 1098.1666666666667,
+      "mean_completion_tokens": 108.66666666666667,
+      "mean_total_tokens": 1206.8333333333333,
+      "mean_latency_s": 2.8338130333286244,
+      "median_latency_s": 2.8382474500103854,
+      "mean_model_calls": 2.8333333333333335,
+      "mean_tool_calls": 3.1666666666666665,
+      "tool_errors": 4,
+      "by_family": {
+        "chain": {
+          "n": 6,
+          "success": 0.0
+        }
+      },
+      "tasks": [
+        {
+          "id": "d01",
+          "family": "chain",
+          "question": "На сколько годовая премия Белова Кирилла больше годовой премии Новиковой Дарьи, если разницу перевести в доллары США? Процент премии бери из политики. Годовая зарплата — месячная, умноженная на 12. Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 677,
+          "pred": "-18000",
+          "ok": false,
+          "prompt_tokens": 1458,
+          "completion_tokens": 162,
+          "latency_s": 3.8901492999866605,
+          "model_calls": 3,
+          "tool_calls": 4,
+          "tool_errors": 1,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [{\"entity\": \"employee\", \"name\": \"Белов Кирилл\", \"department\": \"\", \"var\": \"emp_belov\"}, {\"entity\": \"employee\", \"name\": \"Новикова Дарья\", \"department\": \"\", \"var\": \"emp_novikova\"}]}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Белов Кирилл\", \"department\": \"продажи\", \"salary\": 135000, \"city\": \"Москва\", \"start\": \"2021-07-19\", \"start_year\": 2021, \"manager\": \"Волкова Елена\"}}"
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Новикова Дарья\", \"department\": \"финансы\", \"salary\": 150000, \"city\": \"Москва\", \"start\": \"2020-12-01\", \"start_year\": 2020, \"manager\": \"Петров Игорь\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [], \"expression\": \"convert((emp_belov.salary * 12 * 0.1) - (emp_novikova.salary * 12 * 0.1), 'RUB', 'USD')\"}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": false,
+              "error": "forbidden",
+              "preview": "{\"ok\": false, \"error\": \"forbidden\", \"detail\": \"допустимы только числа и + - * / // %\"}"
+            },
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [], \"expression\": \"(emp_belov.salary * 12 * 10 - emp_novikova.salary * 12 * 10) / 100\"}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": -18000}}"
+            }
+          ]
+        },
+        {
+          "id": "d02",
+          "family": "chain",
+          "question": "Какова годовая премия Орлова Дениса в долларах США? Процент премии бери из политики. Годовая зарплата — месячная, умноженная на 12. Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 3612,
+          "pred": "3360000",
+          "ok": false,
+          "prompt_tokens": 633,
+          "completion_tokens": 50,
+          "latency_s": 1.364513500011526,
+          "model_calls": 2,
+          "tool_calls": 2,
+          "tool_errors": 0,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [{\"entity\": \"employee\", \"name\": \"Орлов Денис\", \"department\": \"\", \"var\": \"emp\"}]}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Орлов Денис\", \"department\": \"разработка\", \"salary\": 280000, \"city\": \"Казань\", \"start\": \"2018-11-20\", \"start_year\": 2018, \"manager\": \"Соколова Мария\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [], \"expression\": \"emp.salary * 12\"}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 3360000}}"
+            }
+          ]
+        },
+        {
+          "id": "d03",
+          "family": "chain",
+          "question": "Чему равен годовой бюджет отдела, в котором работает руководитель руководителя Ивановой Анны, в долларах США? Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 22580,
+          "pred": "",
+          "ok": false,
+          "prompt_tokens": 1108,
+          "completion_tokens": 106,
+          "latency_s": 2.879488400008995,
+          "model_calls": 3,
+          "tool_calls": 4,
+          "tool_errors": 1,
+          "stop": "error",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [{\"entity\": \"employee\", \"name\": \"Иванова Анна\", \"department\": \"\", \"var\": \"emp\"}]}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Иванова Анна\", \"department\": \"финансы\", \"salary\": 180000, \"city\": \"Москва\", \"start\": \"2019-03-01\", \"start_year\": 2019, \"manager\": \"Петров Игорь\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [{\"entity\": \"employee\", \"name\": \"Петров Игорь\", \"department\": \"\", \"var\": \"emp2\"}], \"expression\": \"\"}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Петров Игорь\", \"department\": \"финансы\", \"salary\": 250000, \"city\": \"Москва\", \"start\": \"2016-01-15\", \"start_year\": 2016, \"manager\": \"Соколова Мария\"}}"
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": false,
+              "error": "syntax",
+              "preview": "{\"ok\": false, \"error\": \"syntax\", \"detail\": \"пустое выражение\"}"
+            },
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [{\"entity\": \"employee\", \"name\": \"Петров Игорь\", \"department\": \"\", \"var\": \"emp2\"}], \"expression\": \"emp2.manager\"}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Петров Игорь\", \"department\": \"финансы\", \"salary\": 250000, \"city\": \"Москва\", \"start\": \"2016-01-15\", \"start_year\": 2016, \"manager\": \"Соколова Мария\"}}"
+            }
+          ]
+        },
+        {
+          "id": "d04",
+          "family": "chain",
+          "question": "Какова годовая зарплата сотрудницы с фамилией Смирнов в долларах США? Фамилия может совпасть у нескольких людей, нужна сотрудница. Годовая зарплата — месячная, умноженная на 12. Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 24516,
+          "pred": "2280000",
+          "ok": false,
+          "prompt_tokens": 1583,
+          "completion_tokens": 113,
+          "latency_s": 3.4089991999790072,
+          "model_calls": 4,
+          "tool_calls": 3,
+          "tool_errors": 1,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [{\"entity\": \"employee\", \"name\": \"Смирнов\", \"department\": \"\", \"var\": \"emp\"}]}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": false,
+              "error": "ambiguous",
+              "preview": "{\"ok\": false, \"error\": \"ambiguous\", \"detail\": \"несколько сотрудников\", \"candidates\": [{\"name\": \"Смирнов Павел\", \"department\": \"разработка\", \"salary\": 210000, \"city\": \"Казань\", \"start\": \"2021-09-01\", \"start_year\": 2021, \"manager\": \"Орлов Денис\"}, {\"name\": \"Смирнова Ольга\", \"department\": \"разработка\", \"salary\": 190000, \"city\": \"Казань\", \"start\": \"2022-02-14\", \"start_year\": 2022, \"manager\": \"Орлов Денис\"}]}"
+            },
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [{\"entity\": \"employee\", \"name\": \"Смирнова Ольга\", \"department\": \"\", \"var\": \"emp\"}]}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Смирнова Ольга\", \"department\": \"разработка\", \"salary\": 190000, \"city\": \"Казань\", \"start\": \"2022-02-14\", \"start_year\": 2022, \"manager\": \"Орлов Денис\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [], \"convert\": {\"amount\": \"emp.salary * 12\", \"from_currency\": \"RUB\", \"to_currency\": \"USD\"}}",
+              "tool_names": []
+            },
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [], \"expression\": \"emp.salary * 12\"}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 2280000}}"
+            }
+          ]
+        },
+        {
+          "id": "d05",
+          "family": "chain",
+          "question": "На сколько суточные Волковой Елены больше суточных Морозова Артёма, если длительность каждой командировки в днях равна числу полных лет работы этого сотрудника на дату 2026-10-11? Город бери из карточки сотрудника, ставку суточных — из политики.",
+          "gold": 8130,
+          "pred": "7000",
+          "ok": false,
+          "prompt_tokens": 755,
+          "completion_tokens": 113,
+          "latency_s": 2.662721299973782,
+          "model_calls": 2,
+          "tool_calls": 3,
+          "tool_errors": 0,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [{\"entity\": \"employee\", \"name\": \"Волкова Елена\", \"department\": \"\", \"var\": \"emp_volkova\"}, {\"entity\": \"employee\", \"name\": \"Морозов Артём\", \"department\": \"\", \"var\": \"emp_morozov\"}]}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Волкова Елена\", \"department\": \"продажи\", \"salary\": 230000, \"city\": \"Новосибирск\", \"start\": \"2017-08-30\", \"start_year\": 2017, \"manager\": \"Соколова Мария\"}}"
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Морозов Артём\", \"department\": \"поддержка\", \"salary\": 120000, \"city\": \"Казань\", \"start\": \"2024-04-01\", \"start_year\": 2024, \"manager\": \"Орлов Денис\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [], \"expression\": \"(2026 - emp_volkova.start_year) * 1000 - (2026 - emp_morozov.start_year) * 1000\"}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 7000}}"
+            }
+          ]
+        },
+        {
+          "id": "d06",
+          "family": "chain",
+          "question": "Какова месячная зарплата руководителя отдела «поддержка» в евро? Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 2800,
+          "pred": "0",
+          "ok": false,
+          "prompt_tokens": 1052,
+          "completion_tokens": 108,
+          "latency_s": 2.7970065000117756,
+          "model_calls": 3,
+          "tool_calls": 3,
+          "tool_errors": 1,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [{\"entity\": \"department\", \"name\": \"поддержка\", \"department\": \"\", \"var\": \"dept\"}]}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_department",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"поддержка\", \"budget\": 1500000, \"head\": \"Орлов Денис\", \"city\": \"Казань\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [{\"entity\": \"employee\", \"name\": \"Орлов Денис\", \"department\": \"поддержка\", \"var\": \"emp\"}], \"expression\": \"convert\", \"convert\": {\"amount\": \"emp.salary\", \"from_currency\": \"RUB\", \"to_currency\": \"EUR\"}}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": false,
+              "error": "not_found",
+              "preview": "{\"ok\": false, \"error\": \"not_found\", \"detail\": \"сотрудник не найден\"}"
+            },
+            {
+              "kind": "model",
+              "preview": "{\"lookups\": [], \"expression\": \"0\"}",
+              "tool_names": []
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 0}}"
+            }
+          ]
+        }
+      ]
+    },
+    "react": {
+      "n": 6,
+      "success": 1.0,
+      "mean_prompt_tokens": 7041.166666666667,
+      "mean_completion_tokens": 161.0,
+      "mean_total_tokens": 7202.166666666667,
+      "mean_latency_s": 5.140430883310425,
+      "median_latency_s": 5.013654349982971,
+      "mean_model_calls": 4.833333333333333,
+      "mean_tool_calls": 5.0,
+      "tool_errors": 2,
+      "by_family": {
+        "chain": {
+          "n": 6,
+          "success": 1.0
+        }
+      },
+      "tasks": [
+        {
+          "id": "d01",
+          "family": "chain",
+          "question": "На сколько годовая премия Белова Кирилла больше годовой премии Новиковой Дарьи, если разницу перевести в доллары США? Процент премии бери из политики. Годовая зарплата — месячная, умноженная на 12. Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 677,
+          "pred": "ANSWER: 677",
+          "ok": true,
+          "prompt_tokens": 7813,
+          "completion_tokens": 224,
+          "latency_s": 6.451793099986389,
+          "model_calls": 5,
+          "tool_calls": 7,
+          "tool_errors": 0,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Белов Кирилл\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Новикова Дарья\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"search_policy\", \"arguments\": {\"keyword\": \"премия\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee",
+                "lookup_employee",
+                "search_policy"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Белов Кирилл\", \"department\": \"продажи\", \"salary\": 135000, \"city\": \"Москва\", \"start\": \"2021-07-19\", \"start_year\": 2021, \"manager\": \"Волкова Елена\"}}"
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Новикова Дарья\", \"department\": \"финансы\", \"salary\": 150000, \"city\": \"Москва\", \"start\": \"2020-12-01\", \"start_year\": 2020, \"manager\": \"Петров Игорь\"}}"
+            },
+            {
+              "kind": "tool",
+              "name": "search_policy",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"items\": [{\"id\": \"bonus\", \"text\": \"Годовая премия: 15 процентов годовой зарплаты в отделе продажи, 10 процентов в остальных отделах.\"}]}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"135000*12*15//100\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"150000*12*10//100\"}}\n</tool_call>",
+              "tool_names": [
+                "calculate",
+                "calculate"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 243000}}"
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 180000}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"243000-180000\"}}\n</tool_call>",
+              "tool_names": [
+                "calculate"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 63000}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"convert_money\", \"arguments\": {\"amount\": 63000, \"from_currency\": \"RUB\", \"to_currency\": \"USD\"}}\n</tool_call>",
+              "tool_names": [
+                "convert_money"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "convert_money",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 677}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 677",
+              "tool_names": []
+            }
+          ]
+        },
+        {
+          "id": "d02",
+          "family": "chain",
+          "question": "Какова годовая премия Орлова Дениса в долларах США? Процент премии бери из политики. Годовая зарплата — месячная, умноженная на 12. Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 3612,
+          "pred": "ANSWER: 3612",
+          "ok": true,
+          "prompt_tokens": 5561,
+          "completion_tokens": 133,
+          "latency_s": 4.887024499999825,
+          "model_calls": 4,
+          "tool_calls": 4,
+          "tool_errors": 0,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Орлов Денис\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"search_policy\", \"arguments\": {\"keyword\": \"премия\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee",
+                "search_policy"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Орлов Денис\", \"department\": \"разработка\", \"salary\": 280000, \"city\": \"Казань\", \"start\": \"2018-11-20\", \"start_year\": 2018, \"manager\": \"Соколова Мария\"}}"
+            },
+            {
+              "kind": "tool",
+              "name": "search_policy",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"items\": [{\"id\": \"bonus\", \"text\": \"Годовая премия: 15 процентов годовой зарплаты в отделе продажи, 10 процентов в остальных отделах.\"}]}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"280000*12*10//100\"}}\n</tool_call>",
+              "tool_names": [
+                "calculate"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 336000}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"convert_money\", \"arguments\": {\"amount\": 336000, \"from_currency\": \"RUB\", \"to_currency\": \"USD\"}}\n</tool_call>",
+              "tool_names": [
+                "convert_money"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "convert_money",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 3612}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 3612",
+              "tool_names": []
+            }
+          ]
+        },
+        {
+          "id": "d03",
+          "family": "chain",
+          "question": "Чему равен годовой бюджет отдела, в котором работает руководитель руководителя Ивановой Анны, в долларах США? Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 22580,
+          "pred": "ANSWER: 22580",
+          "ok": true,
+          "prompt_tokens": 8663,
+          "completion_tokens": 146,
+          "latency_s": 6.539300799951889,
+          "model_calls": 6,
+          "tool_calls": 5,
+          "tool_errors": 0,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Иванова Анна\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Иванова Анна\", \"department\": \"финансы\", \"salary\": 180000, \"city\": \"Москва\", \"start\": \"2019-03-01\", \"start_year\": 2019, \"manager\": \"Петров Игорь\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Петров Игорь\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Петров Игорь\", \"department\": \"финансы\", \"salary\": 250000, \"city\": \"Москва\", \"start\": \"2016-01-15\", \"start_year\": 2016, \"manager\": \"Соколова Мария\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Соколова Мария\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Соколова Мария\", \"department\": \"управление\", \"salary\": 320000, \"city\": \"Москва\", \"start\": \"2014-06-01\", \"start_year\": 2014, \"manager\": null}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_department\", \"arguments\": {\"name\": \"управление\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_department"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_department",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"управление\", \"budget\": 2100000, \"head\": \"Соколова Мария\", \"city\": \"Москва\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"convert_money\", \"arguments\": {\"amount\": 2100000, \"from_currency\": \"RUB\", \"to_currency\": \"USD\"}}\n</tool_call>",
+              "tool_names": [
+                "convert_money"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "convert_money",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 22580}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 22580",
+              "tool_names": []
+            }
+          ]
+        },
+        {
+          "id": "d04",
+          "family": "chain",
+          "question": "Какова годовая зарплата сотрудницы с фамилией Смирнов в долларах США? Фамилия может совпасть у нескольких людей, нужна сотрудница. Годовая зарплата — месячная, умноженная на 12. Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 24516,
+          "pred": "ANSWER: 24516",
+          "ok": true,
+          "prompt_tokens": 5619,
+          "completion_tokens": 103,
+          "latency_s": 3.172343699960038,
+          "model_calls": 4,
+          "tool_calls": 3,
+          "tool_errors": 1,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Смирнова\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": false,
+              "error": "ambiguous",
+              "preview": "{\"ok\": false, \"error\": \"ambiguous\", \"detail\": \"несколько сотрудников\", \"candidates\": [{\"name\": \"Смирнов Павел\", \"department\": \"разработка\", \"salary\": 210000, \"city\": \"Казань\", \"start\": \"2021-09-01\", \"start_year\": 2021, \"manager\": \"Орлов Денис\"}, {\"name\": \"Смирнова Ольга\", \"department\": \"разработка\", \"salary\": 190000, \"city\": \"Казань\", \"start\": \"2022-02-14\", \"start_year\": 2022, \"manager\": \"Орлов Денис\"}]}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"190000*12\"}}\n</tool_call>",
+              "tool_names": [
+                "calculate"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 2280000}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"convert_money\", \"arguments\": {\"amount\": 2280000, \"from_currency\": \"RUB\", \"to_currency\": \"USD\"}}\n</tool_call>",
+              "tool_names": [
+                "convert_money"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "convert_money",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 24516}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 24516",
+              "tool_names": []
+            }
+          ]
+        },
+        {
+          "id": "d05",
+          "family": "chain",
+          "question": "На сколько суточные Волковой Елены больше суточных Морозова Артёма, если длительность каждой командировки в днях равна числу полных лет работы этого сотрудника на дату 2026-10-11? Город бери из карточки сотрудника, ставку суточных — из политики.",
+          "gold": 8130,
+          "pred": "ANSWER: 8130",
+          "ok": true,
+          "prompt_tokens": 6168,
+          "completion_tokens": 209,
+          "latency_s": 5.140284199966118,
+          "model_calls": 4,
+          "tool_calls": 6,
+          "tool_errors": 0,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Волкова Елена\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Морозов Артём\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"search_policy\", \"arguments\": {\"keyword\": \"суточные\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee",
+                "lookup_employee",
+                "search_policy"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Волкова Елена\", \"department\": \"продажи\", \"salary\": 230000, \"city\": \"Новосибирск\", \"start\": \"2017-08-30\", \"start_year\": 2017, \"manager\": \"Соколова Мария\"}}"
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Морозов Артём\", \"department\": \"поддержка\", \"salary\": 120000, \"city\": \"Казань\", \"start\": \"2024-04-01\", \"start_year\": 2024, \"manager\": \"Орлов Денис\"}}"
+            },
+            {
+              "kind": "tool",
+              "name": "search_policy",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"items\": [{\"id\": \"perdiem\", \"text\": \"Суточные за день: Москва 1500, Казань 1200, Новосибирск 1300, другой город 1000. Если командировка длиннее 7 дней, сумма суточных умножается на 9 и делится нацело на 10.\"}]}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"years_between\", \"arguments\": {\"start\": \"2017-08-30\", \"end\": \"2026-10-11\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"years_between\", \"arguments\": {\"start\": \"2024-04-01\", \"end\": \"2026-10-11\"}}\n</tool_call>",
+              "tool_names": [
+                "years_between",
+                "years_between"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "years_between",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 9}}"
+            },
+            {
+              "kind": "tool",
+              "name": "years_between",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 2}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"9*1300*9//10 - 2*1200\"}}\n</tool_call>",
+              "tool_names": [
+                "calculate"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 8130}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 8130",
+              "tool_names": []
+            }
+          ]
+        },
+        {
+          "id": "d06",
+          "family": "chain",
+          "question": "Какова месячная зарплата руководителя отдела «поддержка» в евро? Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 2800,
+          "pred": "ANSWER: 2800",
+          "ok": true,
+          "prompt_tokens": 8423,
+          "completion_tokens": 151,
+          "latency_s": 4.65183899999829,
+          "model_calls": 6,
+          "tool_calls": 5,
+          "tool_errors": 1,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_department\", \"arguments\": {\"name\": \"поддержка\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_department"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_department",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"поддержка\", \"budget\": 1500000, \"head\": \"Орлов Денис\", \"city\": \"Казань\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Орлов Денис\", \"department\": \"поддержка\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": false,
+              "error": "not_found",
+              "preview": "{\"ok\": false, \"error\": \"not_found\", \"detail\": \"сотрудник не найден\"}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"list_employees\", \"arguments\": {\"department\": \"поддержка\"}}\n</tool_call>",
+              "tool_names": [
+                "list_employees"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "list_employees",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"department\": \"поддержка\", \"employees\": [{\"name\": \"Морозов Артём\", \"department\": \"поддержка\", \"salary\": 120000, \"city\": \"Казань\", \"start\": \"2024-04-01\", \"start_year\": 2024, \"manager\": \"Орлов Денис\"}]}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Орлов\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Орлов Денис\", \"department\": \"разработка\", \"salary\": 280000, \"city\": \"Казань\", \"start\": \"2018-11-20\", \"start_year\": 2018, \"manager\": \"Соколова Мария\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"convert_money\", \"arguments\": {\"amount\": 280000, \"from_currency\": \"RUB\", \"to_currency\": \"EUR\"}}\n</tool_call>",
+              "tool_names": [
+                "convert_money"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "convert_money",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 2800}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 2800",
+              "tool_names": []
+            }
+          ]
+        }
+      ]
+    },
+    "plan": {
+      "n": 6,
+      "success": 0.6666666666666666,
+      "mean_prompt_tokens": 9240.166666666666,
+      "mean_completion_tokens": 434.3333333333333,
+      "mean_total_tokens": 9674.5,
+      "mean_latency_s": 10.277895916670483,
+      "median_latency_s": 9.384738149994519,
+      "mean_model_calls": 7.333333333333333,
+      "mean_tool_calls": 5.166666666666667,
+      "tool_errors": 5,
+      "by_family": {
+        "chain": {
+          "n": 6,
+          "success": 0.6666666666666666
+        }
+      },
+      "tasks": [
+        {
+          "id": "d01",
+          "family": "chain",
+          "question": "На сколько годовая премия Белова Кирилла больше годовой премии Новиковой Дарьи, если разницу перевести в доллары США? Процент премии бери из политики. Годовая зарплата — месячная, умноженная на 12. Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 677,
+          "pred": "ANSWER: 677",
+          "ok": true,
+          "prompt_tokens": 9525,
+          "completion_tokens": 707,
+          "latency_s": 16.092487599991728,
+          "model_calls": 7,
+          "tool_calls": 6,
+          "tool_errors": 0,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "{\n  \"steps\": [\n    {\n      \"tool\": \"lookup_employee\",\n      \"goal\": \"Получить месячную зарплату Белова Кирилла\"\n    },\n    {\n      \"tool\": \"lookup_employee\",\n      \"goal\": \"Получить месячную зарплату Новиковой Дарьи\"\n    },\n    {\n      \"tool\": \"search_policy\",\n      \"goal\": \"Найти процент годовой премии в регламенте\"\n    },\n    {\n      \"tool\": \"calculate\",\n      \"goal\": \"Вычислить разницу годовых премий в рублях\"\n    },\n    {\n      \"tool\": \"convert_money\",\n      \"goal\": \"Перевести разницу премий в доллары США\"\n    }\n  ]\n}",
+              "tool_names": []
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Белов Кирилл\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Белов Кирилл\", \"department\": \"продажи\", \"salary\": 135000, \"city\": \"Москва\", \"start\": \"2021-07-19\", \"start_year\": 2021, \"manager\": \"Волкова Елена\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Новикова Дарья\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Новикова Дарья\", \"department\": \"финансы\", \"salary\": 150000, \"city\": \"Москва\", \"start\": \"2020-12-01\", \"start_year\": 2020, \"manager\": \"Петров Игорь\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "У меня уже есть данные о зарплатах обоих сотрудников. Теперь нужно найти процент премии из политики.\n\n<tool_call>\n{\"name\": \"search_policy\", \"arguments\": {\"keyword\": \"премия\"}}\n</tool_call>",
+              "tool_names": [
+                "search_policy"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "search_policy",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"items\": [{\"id\": \"bonus\", \"text\": \"Годовая премия: 15 процентов годовой зарплаты в отделе продажи, 10 процентов в остальных отделах.\"}]}}"
+            },
+            {
+              "kind": "model",
+              "preview": "Теперь у меня все данные:\n- Белов Кирилл: отдел \"продажи\", месячная зарплата 135000, премия 15%\n- Новикова Дарья: отдел \"финансы\", месячная зарплата 150000, премия 10%\n\nВычислю годовые премии:\n- Белов: 135000 * 12 * 0.15 = 243000\n- Новикова: 150000 * 12 * 0.10 = 180000\n- Разница: 243000 - 180000 = 63000 RUB\n\nПереведу в доллары:\n\n<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"135000 * 12 * 15 // 100\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"150000 * 12 * 10 // 100\"}}\n</tool_call>",
+              "tool_names": [
+                "calculate",
+                "calculate"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 243000}}"
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 180000}}"
+            },
+            {
+              "kind": "model",
+              "preview": "Годовая премия Белова Кирилла (продажи, 15%): 135000 * 12 * 15 / 100 = 243000\nГодовая премия Новиковой Дарьи (финансы, 10%): 150000 * 12 * 10 / 100 = 180000\nРазница: 243000 - 180000 = 63000 RUB\n\n<tool_call>\n{\"name\": \"convert_money\", \"arguments\": {\"amount\": 63000, \"from_currency\": \"RUB\", \"to_currency\": \"USD\"}}\n</tool_call>",
+              "tool_names": [
+                "convert_money"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "convert_money",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 677}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 677",
+              "tool_names": []
+            }
+          ]
+        },
+        {
+          "id": "d02",
+          "family": "chain",
+          "question": "Какова годовая премия Орлова Дениса в долларах США? Процент премии бери из политики. Годовая зарплата — месячная, умноженная на 12. Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 3612,
+          "pred": "ANSWER: 3612",
+          "ok": true,
+          "prompt_tokens": 7475,
+          "completion_tokens": 320,
+          "latency_s": 7.512334500032011,
+          "model_calls": 6,
+          "tool_calls": 4,
+          "tool_errors": 0,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "{\n  \"steps\": [\n    {\n      \"tool\": \"lookup_employee\",\n      \"goal\": \"Получить месячную зарплату Орлова Дениса\"\n    },\n    {\n      \"tool\": \"search_policy\",\n      \"goal\": \"Найти процент годовой премии в регламенте\"\n    },\n    {\n      \"tool\": \"calculate\",\n      \"goal\": \"Вычислить годовую зарплату и сумму премии в рублях\"\n    },\n    {\n      \"tool\": \"convert_money\",\n      \"goal\": \"Перевести сумму премии в USD\"\n    }\n  ]\n}",
+              "tool_names": []
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Орлов Денис\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Орлов Денис\", \"department\": \"разработка\", \"salary\": 280000, \"city\": \"Казань\", \"start\": \"2018-11-20\", \"start_year\": 2018, \"manager\": \"Соколова Мария\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"search_policy\", \"arguments\": {\"keyword\": \"премия\"}}\n</tool_call>",
+              "tool_names": [
+                "search_policy"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "search_policy",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"items\": [{\"id\": \"bonus\", \"text\": \"Годовая премия: 15 процентов годовой зарплаты в отделе продажи, 10 процентов в остальных отделах.\"}]}}"
+            },
+            {
+              "kind": "model",
+              "preview": "Уже есть данные: Орлов Денис, отдел «разработка», месячная зарплата 280000. Премия: 10% (не продажи).\n\n<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"280000*12*10//100\"}}\n</tool_call>",
+              "tool_names": [
+                "calculate"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 336000}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"convert_money\", \"arguments\": {\"amount\": 336000, \"from_currency\": \"RUB\", \"to_currency\": \"USD\"}}\n</tool_call>",
+              "tool_names": [
+                "convert_money"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "convert_money",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 3612}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 3612",
+              "tool_names": []
+            }
+          ]
+        },
+        {
+          "id": "d03",
+          "family": "chain",
+          "question": "Чему равен годовой бюджет отдела, в котором работает руководитель руководителя Ивановой Анны, в долларах США? Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 22580,
+          "pred": "ANSWER: 22580",
+          "ok": true,
+          "prompt_tokens": 9196,
+          "completion_tokens": 387,
+          "latency_s": 9.20757800003048,
+          "model_calls": 7,
+          "tool_calls": 5,
+          "tool_errors": 0,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "{\n  \"steps\": [\n    {\n      \"tool\": \"lookup_employee\",\n      \"goal\": \"Найти руководителя Ивановой Анны\"\n    },\n    {\n      \"tool\": \"lookup_employee\",\n      \"goal\": \"Найти руководителя руководителя Ивановой Анны\"\n    },\n    {\n      \"tool\": \"lookup_employee\",\n      \"goal\": \"Определить отдел, в котором работает руководитель руководителя Ивановой Анны\"\n    },\n    {\n      \"tool\": \"lookup_department\",\n      \"goal\": \"Получить годовой бюджет этого отдела в рублях\"\n    },\n    {\n      \"tool\": \"convert_money\",\n      \"goal\": \"Перевести бюджет из рублей в доллары США\"\n    },\n    {\n      \"tool\": \"calculate\",\n      \"goal\": \"Отбросить дробную часть полученной суммы в долларах\"\n    }\n  ]\n}",
+              "tool_names": []
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Иванова Анна\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Иванова Анна\", \"department\": \"финансы\", \"salary\": 180000, \"city\": \"Москва\", \"start\": \"2019-03-01\", \"start_year\": 2019, \"manager\": \"Петров Игорь\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Петров Игорь\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Петров Игорь\", \"department\": \"финансы\", \"salary\": 250000, \"city\": \"Москва\", \"start\": \"2016-01-15\", \"start_year\": 2016, \"manager\": \"Соколова Мария\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Соколова Мария\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Соколова Мария\", \"department\": \"управление\", \"salary\": 320000, \"city\": \"Москва\", \"start\": \"2014-06-01\", \"start_year\": 2014, \"manager\": null}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_department\", \"arguments\": {\"name\": \"управление\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_department"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_department",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"управление\", \"budget\": 2100000, \"head\": \"Соколова Мария\", \"city\": \"Москва\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "Годовой бюджет отдела «управление» — 2 100 000 RUB. Переведу в USD.\n\n<tool_call>\n{\"name\": \"convert_money\", \"arguments\": {\"amount\": 2100000, \"from_currency\": \"RUB\", \"to_currency\": \"USD\"}}\n</tool_call>",
+              "tool_names": [
+                "convert_money"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "convert_money",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 22580}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 22580",
+              "tool_names": []
+            }
+          ]
+        },
+        {
+          "id": "d04",
+          "family": "chain",
+          "question": "Какова годовая зарплата сотрудницы с фамилией Смирнов в долларах США? Фамилия может совпасть у нескольких людей, нужна сотрудница. Годовая зарплата — месячная, умноженная на 12. Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 24516,
+          "pred": "ANSWER: 24516",
+          "ok": true,
+          "prompt_tokens": 6781,
+          "completion_tokens": 343,
+          "latency_s": 8.087682700017467,
+          "model_calls": 6,
+          "tool_calls": 3,
+          "tool_errors": 1,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "{\n  \"steps\": [\n    {\n      \"tool\": \"list_employees\",\n      \"goal\": \"Получить список сотрудников для поиска сотрудницы с фамилией Смирнов\"\n    },\n    {\n      \"tool\": \"lookup_employee\",\n      \"goal\": \"Получить месячную зарплату найденной сотрудницы\"\n    },\n    {\n      \"tool\": \"calculate\",\n      \"goal\": \"Вычислить годовую зарплату в рублях\"\n    },\n    {\n      \"tool\": \"convert_money\",\n      \"goal\": \"Перевести годовую зарплату в доллары США\"\n    }\n  ]\n}",
+              "tool_names": []
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Смирнов\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": false,
+              "error": "ambiguous",
+              "preview": "{\"ok\": false, \"error\": \"ambiguous\", \"detail\": \"несколько сотрудников\", \"candidates\": [{\"name\": \"Смирнов Павел\", \"department\": \"разработка\", \"salary\": 210000, \"city\": \"Казань\", \"start\": \"2021-09-01\", \"start_year\": 2021, \"manager\": \"Орлов Денис\"}, {\"name\": \"Смирнова Ольга\", \"department\": \"разработка\", \"salary\": 190000, \"city\": \"Казань\", \"start\": \"2022-02-14\", \"start_year\": 2022, \"manager\": \"Орлов Денис\"}]}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"190000*12\"}}\n</tool_call>",
+              "tool_names": [
+                "calculate"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 2280000}}"
+            },
+            {
+              "kind": "model",
+              "preview": "{\n  \"steps\": [\n    {\n      \"tool\": \"calculate\",\n      \"goal\": \"Умножить месячную зарплату сотрудницы на 12\"\n    },\n    {\n      \"tool\": \"convert_money\",\n      \"goal\": \"Перевести годовую зарплату в USD\"\n    }\n  ]\n}",
+              "tool_names": []
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"convert_money\", \"arguments\": {\"amount\": 2280000, \"from_currency\": \"RUB\", \"to_currency\": \"USD\"}}\n</tool_call>",
+              "tool_names": [
+                "convert_money"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "convert_money",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 24516}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 24516",
+              "tool_names": []
+            }
+          ]
+        },
+        {
+          "id": "d05",
+          "family": "chain",
+          "question": "На сколько суточные Волковой Елены больше суточных Морозова Артёма, если длительность каждой командировки в днях равна числу полных лет работы этого сотрудника на дату 2026-10-11? Город бери из карточки сотрудника, ставку суточных — из политики.",
+          "gold": 8130,
+          "pred": "ANSWER: 9300",
+          "ok": false,
+          "prompt_tokens": 12726,
+          "completion_tokens": 469,
+          "latency_s": 11.205394399992656,
+          "model_calls": 9,
+          "tool_calls": 7,
+          "tool_errors": 0,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "{\"steps\": [{\"tool\": \"lookup_employee\", \"goal\": \"Получить данные Волковой Елены: город, дата выхода\"}, {\"tool\": \"lookup_employee\", \"goal\": \"Получить данные Морозова Артёма: город, дата выхода\"}, {\"tool\": \"years_between\", \"goal\": \"Вычислить число полных лет работы Волковой Елены на 2026-10-11\"}, {\"tool\": \"years_between\", \"goal\": \"Вычислить число полных лет работы Морозова Артёма на 2026-10-11\"}, {\"tool\": \"search_policy\", \"goal\": \"Найти ставки суточных для городов, где работают сотрудники\"}, {\"tool\": \"calculate\", \"goal\": \"Вычислить разницу в общих суточных между двумя сотрудниками\"}]}",
+              "tool_names": []
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Волкова Елена\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Волкова Елена\", \"department\": \"продажи\", \"salary\": 230000, \"city\": \"Новосибирск\", \"start\": \"2017-08-30\", \"start_year\": 2017, \"manager\": \"Соколова Мария\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Морозов Артём\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Морозов Артём\", \"department\": \"поддержка\", \"salary\": 120000, \"city\": \"Казань\", \"start\": \"2024-04-01\", \"start_year\": 2024, \"manager\": \"Орлов Денис\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"years_between\", \"arguments\": {\"start\": \"2017-08-30\", \"end\": \"2026-10-11\"}}\n</tool_call>",
+              "tool_names": [
+                "years_between"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "years_between",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 9}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"years_between\", \"arguments\": {\"start\": \"2024-04-01\", \"end\": \"2026-10-11\"}}\n</tool_call>",
+              "tool_names": [
+                "years_between"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "years_between",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 2}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"years_between\", \"arguments\": {\"start\": \"2017-08-30\", \"end\": \"2026-10-11\"}}\n</tool_call>",
+              "tool_names": [
+                "years_between"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "years_between",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 9}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"search_policy\", \"arguments\": {\"keyword\": \"суточные\"}}\n</tool_call>",
+              "tool_names": [
+                "search_policy"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "search_policy",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"items\": [{\"id\": \"perdiem\", \"text\": \"Суточные за день: Москва 1500, Казань 1200, Новосибирск 1300, другой город 1000. Если командировка длиннее 7 дней, сумма суточных умножается на 9 и делится нацело на 10.\"}]}}"
+            },
+            {
+              "kind": "model",
+              "preview": "Уже есть наблюдение: years_between для Морозова Артёма (2024-04-01 → 2026-10-11) = 2.\n\n<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"9*1300 - 2*1200\"}}\n</tool_call>",
+              "tool_names": [
+                "calculate"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 9300}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 9300",
+              "tool_names": []
+            }
+          ]
+        },
+        {
+          "id": "d06",
+          "family": "chain",
+          "question": "Какова месячная зарплата руководителя отдела «поддержка» в евро? Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 2800,
+          "pred": "ANSWER: 0",
+          "ok": false,
+          "prompt_tokens": 9738,
+          "completion_tokens": 380,
+          "latency_s": 9.561898299958557,
+          "model_calls": 9,
+          "tool_calls": 6,
+          "tool_errors": 4,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "{\n  \"steps\": [\n    {\n      \"tool\": \"lookup_department\",\n      \"goal\": \"Найти руководителя отдела «поддержка»\"\n    },\n    {\n      \"tool\": \"lookup_employee\",\n      \"goal\": \"Получить месячную зарплату руководителя в рублях\"\n    },\n    {\n      \"tool\": \"convert_money\",\n      \"goal\": \"Перевести зарплату из рублей в евро\"\n    }\n  ]\n}",
+              "tool_names": []
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_department\", \"arguments\": {\"name\": \"поддержка\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_department"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_department",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"поддержка\", \"budget\": 1500000, \"head\": \"Орлов Денис\", \"city\": \"Казань\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Орлов Денис\", \"department\": \"поддержка\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": false,
+              "error": "not_found",
+              "preview": "{\"ok\": false, \"error\": \"not_found\", \"detail\": \"сотрудник не найден\"}"
+            },
+            {
+              "kind": "model",
+              "preview": "{\"steps\": [{\"tool\": \"list_employees\", \"goal\": \"Найти сотрудника с именем Орлов Денис в отделе поддержка\"}, {\"tool\": \"convert_money\", \"goal\": \"Перевести месячную зарплату из рублей в евро\"}]}",
+              "tool_names": []
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"list_employees\", \"arguments\": {\"department\": \"поддержка\"}}\n</tool_call>",
+              "tool_names": [
+                "list_employees"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "list_employees",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"department\": \"поддержка\", \"employees\": [{\"name\": \"Морозов Артём\", \"department\": \"поддержка\", \"salary\": 120000, \"city\": \"Казань\", \"start\": \"2024-04-01\", \"start_year\": 2024, \"manager\": \"Орлов Денис\"}]}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Орлов Денис\", \"department\": \"поддержка\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": false,
+              "error": "not_found",
+              "preview": "{\"ok\": false, \"error\": \"not_found\", \"detail\": \"сотрудник не найден\"}"
+            },
+            {
+              "kind": "model",
+              "preview": "Нужно сначала найти зарплату Орлова Дениса. Попробую поискать его в других отделах.\n\n<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Орлов Денис\", \"department\": \"управление\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": false,
+              "error": "not_found",
+              "preview": "{\"ok\": false, \"error\": \"not_found\", \"detail\": \"сотрудник не найден\"}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Орлов Денис\", \"department\": \"продажи\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": false,
+              "error": "not_found",
+              "preview": "{\"ok\": false, \"error\": \"not_found\", \"detail\": \"сотрудник не найден\"}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 0",
+              "tool_names": []
+            }
+          ]
+        }
+      ]
+    },
+    "react_lg": {
+      "n": 6,
+      "success": 1.0,
+      "mean_prompt_tokens": 7049.166666666667,
+      "mean_completion_tokens": 165.0,
+      "mean_total_tokens": 7214.166666666667,
+      "mean_latency_s": 4.4458088333291625,
+      "median_latency_s": 4.24569275000249,
+      "mean_model_calls": 4.833333333333333,
+      "mean_tool_calls": 5.0,
+      "tool_errors": 2,
+      "by_family": {
+        "chain": {
+          "n": 6,
+          "success": 1.0
+        }
+      },
+      "tasks": [
+        {
+          "id": "d01",
+          "family": "chain",
+          "question": "На сколько годовая премия Белова Кирилла больше годовой премии Новиковой Дарьи, если разницу перевести в доллары США? Процент премии бери из политики. Годовая зарплата — месячная, умноженная на 12. Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 677,
+          "pred": "ANSWER: 677",
+          "ok": true,
+          "prompt_tokens": 7813,
+          "completion_tokens": 224,
+          "latency_s": 6.26977239997359,
+          "model_calls": 5,
+          "tool_calls": 7,
+          "tool_errors": 0,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Белов Кирилл\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Новикова Дарья\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"search_policy\", \"arguments\": {\"keyword\": \"премия\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee",
+                "lookup_employee",
+                "search_policy"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Белов Кирилл\", \"department\": \"продажи\", \"salary\": 135000, \"city\": \"Москва\", \"start\": \"2021-07-19\", \"start_year\": 2021, \"manager\": \"Волкова Елена\"}}"
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Новикова Дарья\", \"department\": \"финансы\", \"salary\": 150000, \"city\": \"Москва\", \"start\": \"2020-12-01\", \"start_year\": 2020, \"manager\": \"Петров Игорь\"}}"
+            },
+            {
+              "kind": "tool",
+              "name": "search_policy",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"items\": [{\"id\": \"bonus\", \"text\": \"Годовая премия: 15 процентов годовой зарплаты в отделе продажи, 10 процентов в остальных отделах.\"}]}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"135000*12*15//100\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"150000*12*10//100\"}}\n</tool_call>",
+              "tool_names": [
+                "calculate",
+                "calculate"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 243000}}"
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 180000}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"243000-180000\"}}\n</tool_call>",
+              "tool_names": [
+                "calculate"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 63000}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"convert_money\", \"arguments\": {\"amount\": 63000, \"from_currency\": \"RUB\", \"to_currency\": \"USD\"}}\n</tool_call>",
+              "tool_names": [
+                "convert_money"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "convert_money",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 677}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 677",
+              "tool_names": []
+            }
+          ],
+          "checkpoints": 11,
+          "thread_id": "q1"
+        },
+        {
+          "id": "d02",
+          "family": "chain",
+          "question": "Какова годовая премия Орлова Дениса в долларах США? Процент премии бери из политики. Годовая зарплата — месячная, умноженная на 12. Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 3612,
+          "pred": "ANSWER: 3612",
+          "ok": true,
+          "prompt_tokens": 5561,
+          "completion_tokens": 133,
+          "latency_s": 3.3877551999757998,
+          "model_calls": 4,
+          "tool_calls": 4,
+          "tool_errors": 0,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Орлов Денис\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"search_policy\", \"arguments\": {\"keyword\": \"премия\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee",
+                "search_policy"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Орлов Денис\", \"department\": \"разработка\", \"salary\": 280000, \"city\": \"Казань\", \"start\": \"2018-11-20\", \"start_year\": 2018, \"manager\": \"Соколова Мария\"}}"
+            },
+            {
+              "kind": "tool",
+              "name": "search_policy",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"items\": [{\"id\": \"bonus\", \"text\": \"Годовая премия: 15 процентов годовой зарплаты в отделе продажи, 10 процентов в остальных отделах.\"}]}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"280000*12*10//100\"}}\n</tool_call>",
+              "tool_names": [
+                "calculate"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 336000}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"convert_money\", \"arguments\": {\"amount\": 336000, \"from_currency\": \"RUB\", \"to_currency\": \"USD\"}}\n</tool_call>",
+              "tool_names": [
+                "convert_money"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "convert_money",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 3612}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 3612",
+              "tool_names": []
+            }
+          ],
+          "checkpoints": 9,
+          "thread_id": "q2"
+        },
+        {
+          "id": "d03",
+          "family": "chain",
+          "question": "Чему равен годовой бюджет отдела, в котором работает руководитель руководителя Ивановой Анны, в долларах США? Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 22580,
+          "pred": "ANSWER: 22580",
+          "ok": true,
+          "prompt_tokens": 8663,
+          "completion_tokens": 146,
+          "latency_s": 4.1176763999974355,
+          "model_calls": 6,
+          "tool_calls": 5,
+          "tool_errors": 0,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Иванова Анна\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Иванова Анна\", \"department\": \"финансы\", \"salary\": 180000, \"city\": \"Москва\", \"start\": \"2019-03-01\", \"start_year\": 2019, \"manager\": \"Петров Игорь\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Петров Игорь\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Петров Игорь\", \"department\": \"финансы\", \"salary\": 250000, \"city\": \"Москва\", \"start\": \"2016-01-15\", \"start_year\": 2016, \"manager\": \"Соколова Мария\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Соколова Мария\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Соколова Мария\", \"department\": \"управление\", \"salary\": 320000, \"city\": \"Москва\", \"start\": \"2014-06-01\", \"start_year\": 2014, \"manager\": null}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_department\", \"arguments\": {\"name\": \"управление\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_department"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_department",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"управление\", \"budget\": 2100000, \"head\": \"Соколова Мария\", \"city\": \"Москва\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"convert_money\", \"arguments\": {\"amount\": 2100000, \"from_currency\": \"RUB\", \"to_currency\": \"USD\"}}\n</tool_call>",
+              "tool_names": [
+                "convert_money"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "convert_money",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 22580}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 22580",
+              "tool_names": []
+            }
+          ],
+          "checkpoints": 13,
+          "thread_id": "q3"
+        },
+        {
+          "id": "d04",
+          "family": "chain",
+          "question": "Какова годовая зарплата сотрудницы с фамилией Смирнов в долларах США? Фамилия может совпасть у нескольких людей, нужна сотрудница. Годовая зарплата — месячная, умноженная на 12. Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 24516,
+          "pred": "ANSWER: 24516",
+          "ok": true,
+          "prompt_tokens": 5667,
+          "completion_tokens": 127,
+          "latency_s": 3.434410599991679,
+          "model_calls": 4,
+          "tool_calls": 3,
+          "tool_errors": 1,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Смирнов\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": false,
+              "error": "ambiguous",
+              "preview": "{\"ok\": false, \"error\": \"ambiguous\", \"detail\": \"несколько сотрудников\", \"candidates\": [{\"name\": \"Смирнов Павел\", \"department\": \"разработка\", \"salary\": 210000, \"city\": \"Казань\", \"start\": \"2021-09-01\", \"start_year\": 2021, \"manager\": \"Орлов Денис\"}, {\"name\": \"Смирнова Ольга\", \"department\": \"разработка\", \"salary\": 190000, \"city\": \"Казань\", \"start\": \"2022-02-14\", \"start_year\": 2022, \"manager\": \"Орлов Денис\"}]}"
+            },
+            {
+              "kind": "model",
+              "preview": "Нужна сотрудница — Смирнова Ольга, месячная зарплата 190000.\n\n<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"190000*12\"}}\n</tool_call>",
+              "tool_names": [
+                "calculate"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 2280000}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"convert_money\", \"arguments\": {\"amount\": 2280000, \"from_currency\": \"RUB\", \"to_currency\": \"USD\"}}\n</tool_call>",
+              "tool_names": [
+                "convert_money"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "convert_money",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 24516}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 24516",
+              "tool_names": []
+            }
+          ],
+          "checkpoints": 9,
+          "thread_id": "q4"
+        },
+        {
+          "id": "d05",
+          "family": "chain",
+          "question": "На сколько суточные Волковой Елены больше суточных Морозова Артёма, если длительность каждой командировки в днях равна числу полных лет работы этого сотрудника на дату 2026-10-11? Город бери из карточки сотрудника, ставку суточных — из политики.",
+          "gold": 8130,
+          "pred": "ANSWER: 8130",
+          "ok": true,
+          "prompt_tokens": 6168,
+          "completion_tokens": 209,
+          "latency_s": 5.091529300028924,
+          "model_calls": 4,
+          "tool_calls": 6,
+          "tool_errors": 0,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Волкова Елена\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Морозов Артём\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"search_policy\", \"arguments\": {\"keyword\": \"суточные\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee",
+                "lookup_employee",
+                "search_policy"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Волкова Елена\", \"department\": \"продажи\", \"salary\": 230000, \"city\": \"Новосибирск\", \"start\": \"2017-08-30\", \"start_year\": 2017, \"manager\": \"Соколова Мария\"}}"
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Морозов Артём\", \"department\": \"поддержка\", \"salary\": 120000, \"city\": \"Казань\", \"start\": \"2024-04-01\", \"start_year\": 2024, \"manager\": \"Орлов Денис\"}}"
+            },
+            {
+              "kind": "tool",
+              "name": "search_policy",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"items\": [{\"id\": \"perdiem\", \"text\": \"Суточные за день: Москва 1500, Казань 1200, Новосибирск 1300, другой город 1000. Если командировка длиннее 7 дней, сумма суточных умножается на 9 и делится нацело на 10.\"}]}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"years_between\", \"arguments\": {\"start\": \"2017-08-30\", \"end\": \"2026-10-11\"}}\n</tool_call>\n<tool_call>\n{\"name\": \"years_between\", \"arguments\": {\"start\": \"2024-04-01\", \"end\": \"2026-10-11\"}}\n</tool_call>",
+              "tool_names": [
+                "years_between",
+                "years_between"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "years_between",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 9}}"
+            },
+            {
+              "kind": "tool",
+              "name": "years_between",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 2}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"calculate\", \"arguments\": {\"expression\": \"9*1300*9//10 - 2*1200\"}}\n</tool_call>",
+              "tool_names": [
+                "calculate"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "calculate",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 8130}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 8130",
+              "tool_names": []
+            }
+          ],
+          "checkpoints": 9,
+          "thread_id": "q5"
+        },
+        {
+          "id": "d06",
+          "family": "chain",
+          "question": "Какова месячная зарплата руководителя отдела «поддержка» в евро? Курс бери из инструмента валют, дробную часть отбрось.",
+          "gold": 2800,
+          "pred": "ANSWER: 2800",
+          "ok": true,
+          "prompt_tokens": 8423,
+          "completion_tokens": 151,
+          "latency_s": 4.373709100007545,
+          "model_calls": 6,
+          "tool_calls": 5,
+          "tool_errors": 1,
+          "stop": "answer",
+          "trace": [
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_department\", \"arguments\": {\"name\": \"поддержка\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_department"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_department",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"поддержка\", \"budget\": 1500000, \"head\": \"Орлов Денис\", \"city\": \"Казань\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Орлов Денис\", \"department\": \"поддержка\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": false,
+              "error": "not_found",
+              "preview": "{\"ok\": false, \"error\": \"not_found\", \"detail\": \"сотрудник не найден\"}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"list_employees\", \"arguments\": {\"department\": \"поддержка\"}}\n</tool_call>",
+              "tool_names": [
+                "list_employees"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "list_employees",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"department\": \"поддержка\", \"employees\": [{\"name\": \"Морозов Артём\", \"department\": \"поддержка\", \"salary\": 120000, \"city\": \"Казань\", \"start\": \"2024-04-01\", \"start_year\": 2024, \"manager\": \"Орлов Денис\"}]}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"lookup_employee\", \"arguments\": {\"name\": \"Орлов\"}}\n</tool_call>",
+              "tool_names": [
+                "lookup_employee"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "lookup_employee",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"name\": \"Орлов Денис\", \"department\": \"разработка\", \"salary\": 280000, \"city\": \"Казань\", \"start\": \"2018-11-20\", \"start_year\": 2018, \"manager\": \"Соколова Мария\"}}"
+            },
+            {
+              "kind": "model",
+              "preview": "<tool_call>\n{\"name\": \"convert_money\", \"arguments\": {\"amount\": 280000, \"from_currency\": \"RUB\", \"to_currency\": \"EUR\"}}\n</tool_call>",
+              "tool_names": [
+                "convert_money"
+              ]
+            },
+            {
+              "kind": "tool",
+              "name": "convert_money",
+              "ok": true,
+              "error": "",
+              "preview": "{\"ok\": true, \"data\": {\"value\": 2800}}"
+            },
+            {
+              "kind": "model",
+              "preview": "ANSWER: 2800",
+              "tool_names": []
+            }
+          ],
+          "checkpoints": 13,
+          "thread_id": "q6"
+        }
+      ]
+    }
+  }
+}
